@@ -17,11 +17,12 @@ import org.springframework.security.web.authentication.AnonymousAuthenticationFi
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    private final JwtTokenFilter jwtTokenFilter;
+    private final JwtTokenFilter tokenFilter;
 
-    public SecurityConfiguration(JwtTokenFilter jwtTokenFilter) {
-        this.jwtTokenFilter = jwtTokenFilter;
+    public SecurityConfiguration(JwtTokenFilter tokenFilter) {
+        this.tokenFilter = tokenFilter;
     }
+
 
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity httpSecurity) throws Exception {
@@ -31,7 +32,7 @@ public class SecurityConfiguration {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
 
-                        auth.requestMatchers(HttpMethod.POST, "/location").hasAuthority("GUEST")
+                        auth.requestMatchers(HttpMethod.POST, "/location").hasAuthority("LEAD")
                                 .requestMatchers(HttpMethod.GET, "/location").hasAuthority("GUEST")
                                 .requestMatchers(HttpMethod.GET, "/location/{locationId}").hasAuthority("GUEST")
                                 .requestMatchers(HttpMethod.DELETE, "/location/{locationId}").hasAuthority("GUEST")
@@ -39,14 +40,14 @@ public class SecurityConfiguration {
 
 
 
-                         .requestMatchers(HttpMethod.POST, "/user").permitAll()
-                         .requestMatchers(HttpMethod.POST, "/user/auth").permitAll()
-                         .requestMatchers(HttpMethod.GET, "/user").hasAuthority("LEAD")
+                                .requestMatchers(HttpMethod.POST, "/user").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/user/auth").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/user").hasAuthority("LEAD")
+
 
 
                                 .anyRequest().permitAll())
-
-                .addFilterBefore(jwtTokenFilter, AnonymousAuthenticationFilter.class)
+                .addFilterBefore(tokenFilter, AnonymousAuthenticationFilter.class)
 
                 .build();
     }
