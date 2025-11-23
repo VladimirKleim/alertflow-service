@@ -96,28 +96,6 @@ class LocationControllerTest {
                 ));
     }
 
-//    @Test
-//    void testOpenApiDocumentationIsValid() throws Exception {
-//        // Проверяем что SpringDoc генерирует корректную документацию
-//        mockMvc.perform(get("/v3/api-docs"))
-//                .andExpectAll(
-//                        status().isOk(),
-//                        jsonPath("$.openapi").value("3.0.3"),
-//                        jsonPath("$.paths./location.post").exists(),
-//                        jsonPath("$.paths./location.post.summary").value("Создание новой локации")
-//                );
-//    }
-//
-//    @Test
-//    void testOpenApiMatchesSpecification() throws Exception {
-//        // Сравниваем сгенерированную документацию с эталоном
-//        String generated = mockMvc.perform(get("/v3/api-docs"))
-//                .andReturn().getResponse().getContentAsString();
-//
-//        String expected = // читаем твой openapi-doc.json
-//
-//                OpenApiDiff diff = OpenApiCompare.fromContents(expected, generated);
-//        assertThat(diff.compare().isCompatible()).isTrue();
-//    }
+
 
 }
