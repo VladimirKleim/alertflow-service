@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="LOG_DIR">logs</Property>
+        <Property name="MY_PACKAGE">com.kleim.alertflow</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <File name="AllLogsFile" fileName="${LOG_DIR}/all-logs.xml">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </File>
+
+        <File name="MyHttpLogsFile" fileName="${LOG_DIR}/my-http-logs.xml">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <!-- HTTP логи -->
+        <Logger name="${MY_PACKAGE}" level="DEBUG">
+            <AppenderRef ref="MyHttpLogsFile" level="DEBUG">
+                <Filters>
+                    <ThreadNameFilter threadNamePattern="http-nio-8083-exec-.*" onMatch="ACCEPT" onMismatch="DENY"/>
+                </Filters>
+            </AppenderRef>
+        </Logger>
+
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AllLogsFile"/>
+        </Root>
+    </Loggers>
